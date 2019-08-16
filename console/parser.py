@@ -1,14 +1,12 @@
 import requests
+import json
 
 class Dictionary(): ## class for get description of word
 	def __init__(self, word):
 		if word == "":
 			return "Invaild word"
 		self.word  = word
-		data = self.__get_data()
-		if data == False:
-			return f"The word you've entered isn't in the dictionary."
-		return data
+		self.data = self.__get_data()
 
 	def _find(self,val, query, next_val=0, start=0):
 		for x in range(start, len(query)-len(val)+1):
@@ -29,8 +27,12 @@ class Dictionary(): ## class for get description of word
 		if f"The word you\'ve entered isn\'t in the dictionary." in request.text:
 			return False
 		while True:
-			res, i = self._get_value('<span class="dtText"><strong class="mw_t_bc">', '</span>', request.text)
-			request = request.text[i:]
+			try:
+				res, i = self._get_value('<span class="dtText"><strong class="mw_t_bc">', '</span>', request.text)
+				request = request.text[i:]
+			except AttributeError:
+				res, i = self._get_value('<span class="dtText"><strong class="mw_t_bc">', '</span>', request)
+				request = request[i:]
 			if not self.word[:3] in res:
 				res = res.replace('<', "`#")
 				res = res.replace('>', "`")
@@ -41,12 +43,12 @@ class Dictionary(): ## class for get description of word
 				res = ''.join(res) # end value
 				return res
 
-class RandomWord(Dictionary): ## class to get random word
+class RandomWord(Dictionary): ## class to get random word from site https://randomword.com
 	def __init__(self):
 		self.rand_word, self.description = self.__get_data()
-		print(self.rand_word)
 
-
+	def get_word(self):
+		return {"word": self.rand_word, 'description': self.description}
 
 	def __get_data(self):
 		request = requests.get('https://randomword.com/')
@@ -61,3 +63,17 @@ class RandomWord(Dictionary): ## class to get random word
 		res[1] = res[1][:len(res[1])-2]
 		return res# end value
 
+class RandomRightWord():	## class to get random word from site https://random-word-api.herokuapp.com
+	def __init__(self):
+		self.rand_word, self.description = self.__get_data()
+
+	def get_word(self):
+		return {"word": self.rand_word, 'description': self.description}
+
+	def __get_data(self):
+		api_key = requests.get('https://random-word-api.herokuapp.com/key').text
+		word = requests.get(f'https://random-word-api.herokuapp.com/word?key={api_key}')
+		word = json.loads(word.text)[0]
+		des = Dictionary(word) ## get description of word
+		des = des.data
+		return [word, des]
