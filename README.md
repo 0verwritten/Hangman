@@ -58,13 +58,15 @@ here is how to [install](#How-to-install-game) or [play without installation](#H
 ``` mv dist/main ```
 
 7. If you want to run this game from terminal/cmd(for windows) try this:
+
 > For Windows
-~ right click my computer
-~ click Properties
-~ click Advanced System Settings
-~ click Environment Variables
-~ In the bottom pane find Path, select it and click Edit
-~ after the last ;, add the full path to the folder containing Hangman.exe (in this case you must add C:\Program Files (x86)\Hangman\bin\, also note the \ at the end)
+
++ right click my computer
++ click Properties
++ click Advanced System Settings
++ click Environment Variables
++ In the bottom pane find Path, select it and click Edit
++ after the last ;, add the full path to the folder containing Hangman.exe (in this case you must add C:\Program Files (x86)\Hangman\bin\, also note the \ at the end)
 
 >For Linux
 ```
