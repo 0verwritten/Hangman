@@ -25,7 +25,7 @@
 
 ## Getting started
 
-here is how to [install](#How-to-install-game) or [play without installation](#How-to-run-game-without-installation
+here is how to [install](#How-to-install-game) or [play without installation](#How-to-run-game-without-installation)
 
 1. First you have to before other steps clone this reporitory with : ```git clone https://github.com/TheSimpleWriter/Hangman.git```
 
