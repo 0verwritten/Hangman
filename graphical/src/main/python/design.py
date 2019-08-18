@@ -345,7 +345,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("Hangman", "Hangman"))
         self.label_2.setText(_translate("MainWindow", "Word: _ _ _ _ _ _ _"))
         self.label.setText(_translate("MainWindow", "Description: name of this game"))
         self.label_3.setText(_translate("MainWindow", "TextLabel"))
