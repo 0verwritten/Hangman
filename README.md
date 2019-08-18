@@ -8,7 +8,7 @@
                    |___/
 ```
 ## Navigation
-[Prewiew](#Preview)
+[Prewiew](#Preview) <br />
 [Getting started](#Getting-started)
 
 ## Preview
