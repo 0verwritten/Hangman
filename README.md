@@ -59,6 +59,7 @@ here is how to [install](#How-to-install-game) or [play without installation](#H
 6. Your app will be in ```dist``` folder, to rename output file run this 
 > For Windows
 ``` rename dist/main.exe Hangman.exe ```
+
 > For Mac OS/Linux
 ``` mv dist/main ```
 
