@@ -38,8 +38,6 @@ class MainApp(QMainWindow, design.Ui_MainWindow):
 				return
 		self.answered = ['_' for x in self.word['word']]
 		self.logic()
-		self.all_letters = ['q', 'a', 'z', 'w', 's', 'x', 'e', 'd', 'c', 'r', 'f', 'v', 't', 'g', 'b',\
-							 'y', 'h', 'n', 'u', 'j', 'm', 'i', 'k', 'o', 'l', 'p']
 		self.prev = []
 
 	def stickman_update(self):
@@ -55,7 +53,7 @@ class MainApp(QMainWindow, design.Ui_MainWindow):
 				if letter == self.word['word'][x]:
 					self.answered[x] = letter
 					right = True
-			if letter in self.all_letters:
+			if letter.upper() in self.all_letters:
 				if not right and not letter in self.prev:
 					self.attempt[0] += 1
 				self.prev.append(letter)
@@ -88,10 +86,18 @@ class MainApp(QMainWindow, design.Ui_MainWindow):
 	def keyPressEvent(self, e):
 		if e.key() == Qt.Key_Escape:
 			self.close()
-		self.logic(e.text())
+		for x in range(0,len(self.all_letters)):
+			if self.all_letters[x] == e.text().upper():
+				eval(f'self.key_pressed(self.pushButton_{x+1})')
+	def key_pressed(self, letter):
+		if letter.text() != "":
+			self.logic(letter.text())
+			letter.setText("")
 	def setListener(self):
+		self.all_letters = []
 		for x in range(1,27):
-			eval(f'self.pushButton_{x}.clicked.connect(partial(self.logic,self.pushButton_{x}.text()))')
+			eval(f'self.pushButton_{x}.clicked.connect(partial(self.key_pressed,self.pushButton_{x}))')
+			eval(f"self.all_letters.append(self.pushButton_{x}.text())")
 
 if __name__ == "__main__":
 
