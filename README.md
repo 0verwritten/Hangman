@@ -61,7 +61,7 @@ here is how to [install](#How-to-install-game) or [play without installation](#H
 ``` rename dist/main.exe Hangman.exe ```
 
 > For Mac OS/Linux
-``` mv dist/main ```
+``` mv dist/main  dist/Hangman```
 
 7. If you want to run this game from terminal/cmd(for windows) try this:
 
