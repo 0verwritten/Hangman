@@ -8,10 +8,15 @@ hostname = "randomword.com"
 response = os.system("ping -c 1 " + hostname)
 os.system('clear')
 
+auto_add = True # Automatiticaly add word to dictionary
+
 if response == 0:
 	#a = RandomWord() ## this
 	a = RandomRightWord() ## ot this to get random word
 	word = a.get_word()
+	if auto_add:
+		with open("dictionary.txt", 'a') as f:
+			f.write(word['word']+"||"+word['description'])
 	ans = ''
 	while ans != 1 and ans !=2:
 		print('''
@@ -27,14 +32,17 @@ else:
 	ans = 2
 
 if ans == 2:
-	with open('dictionary.txt', 'r') as f:
-		f = f.read().split('\n')
-		for x in range(len(f)-1, -1, -1):
-			if f[x]=='':
-				del f[x]
-		random.shuffle(f)
-		word = f[0].split('||')
-		word = {'word': word[0], 'description': word[1]}
+	try:
+		with open('dictionary.txt', 'r') as f:
+			f = f.read().split('\n')
+			for x in range(len(f)-1, -1, -1):
+				if f[x]=='':
+					del f[x]
+			random.shuffle(f)
+			word = f[0].split('||')
+			word = {'word': word[0], 'description': word[1]}
+	except FileNotFoundError:
+		print("No dictionary file find")
 
 attempt_count=''
 while True:
@@ -62,11 +70,12 @@ while attempt_count != -1:
 	if repeated_att:
 		print("This letter you have already entered")
 	ans = input("Choose the letter: ")
+	repeated_att = False
 	for x in all_prev:
 		if x == ans:
 			repeated_att = True
 			os.system('clear')
-			continue
+			break
 	right_att = False
 	for x in range(0,len(word['word'])):
 		if ans == word['word'][x]:
@@ -77,18 +86,20 @@ while attempt_count != -1:
 	os.system('clear')
 	if ''.join(answered) == word['word']:
 		break
-	if attempt_count != 0 and not right_att:
+	if attempt_count != 0 and not right_att and not repeated_att:
 		attempt_count -= 1
 		if attempt_count == 0:
 			attempt_count = -1
 	prev = ans
 	all_prev.append(prev)
 
+print()
+print("Word: "+ ''.join(answered))
+print()
+
 if attempt_count> -1:
-	print()
-	print("Word: "+ ''.join(answered))
-	print()
 	print("Сongratulations, you guessed this word)")
 	print()
 else:
 	print("You loose this game(")
+	print()

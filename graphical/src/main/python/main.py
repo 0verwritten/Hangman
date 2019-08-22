@@ -11,6 +11,7 @@ class MainApp(QMainWindow, design.Ui_MainWindow):
 	def __init__(self):
 		super().__init__()
 		self.setupUi(self)
+		self.auto_add = True
 		self.resized.connect(self.on_mwresize)
 		self.show()
 		self.appctxt = ApplicationContext()
@@ -36,6 +37,9 @@ class MainApp(QMainWindow, design.Ui_MainWindow):
 				QMessageBox.warning(self, "Error",
 				"Connect to internet or make dictionary in the program's resource folder")
 				return
+		if self.auto_add:
+			with open("dictionary.txt", 'a') as f:
+				f.write(word['word']+"||"+word['description'])
 		self.answered = ['_' for x in self.word['word']]
 		self.logic()
 		self.prev = []
